@@ -14,6 +14,12 @@ A simple LangChain chat implementation using OpenAI's GPT-4o model. Demonstrates
 
 **Usage**: Open `OpenAIChat.ipynb` to see a basic chat chain implementation with OpenAI.
 
+## 3. Router
+
+A LangGraph router implementation that demonstrates tool calling with conditional routing. The graph intelligently routes between tool execution and direct responses based on whether the LLM decides to use tools or provide a regular response. Features tool binding, MessagesState management, and automatic routing using `tools_condition`.
+
+**Usage**: Open `Router.ipynb` to see tool calling with conditional routing in action.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
