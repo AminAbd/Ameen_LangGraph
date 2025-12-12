@@ -26,6 +26,12 @@ A LangGraph implementation of the ReAct (Reasoning + Acting) pattern. Demonstrat
 
 **Usage**: Open `React.ipynb` to see the ReAct agent in action with sequential tool calling.
 
+## 5. Reducer
+
+A LangGraph demonstration of the **MessagesState reducer**, a crucial component that automatically manages state updates. The reducer automatically merges/concatenates new messages with existing messages in the state. When a node returns `{"messages": [new_message]}`, the reducer automatically appends it to the existing messages list, maintaining conversation history without manual list concatenation. This notebook shows how the reducer handles automatic state management, ensures conversation history preservation across graph execution, and simplifies node implementations by allowing nodes to just return new messages while the reducer handles merging.
+
+**Usage**: Open `Reducer.ipynb` to understand how the MessagesState reducer automatically manages message state.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
