@@ -32,6 +32,12 @@ A LangGraph demonstration of the **MessagesState reducer**, a crucial component 
 
 **Usage**: Open `Reducer.ipynb` to understand how the MessagesState reducer automatically manages message state.
 
+## 6. React with Memory
+
+An enhanced version of the ReAct agent that demonstrates **memory checkpointing** using LangGraph's `MemorySaver`. This implementation shows how to persist conversation state across multiple graph invocations using thread IDs. The key feature is the **memory system** that allows the agent to remember previous interactions, tool calls, and results within the same conversation thread. This enables context-aware follow-up questions (e.g., "Multiply that by 2" referring to a previous result) and maintains complete conversation history. Features memory checkpointing with `MemorySaver`, thread-based conversation management, and persistent state across invocations.
+
+**Usage**: Open `React_with_memory.ipynb` to see how memory checkpointing enables multi-turn conversations with context retention.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
