@@ -44,6 +44,12 @@ A comprehensive demonstration of different **state schema approaches** in LangGr
 
 **Usage**: Open `State_Schema.ipynb` to understand different state schema options and their validation behaviors.
 
+## 8. State Reducer
+
+An in-depth exploration of **reducers** in LangGraph, which specify how state updates are performed on specific keys/channels in the state schema. Demonstrates the default overwriting behavior, the problem that arises when multiple nodes try to update the same state key concurrently (causing `InvalidUpdateError`), and how reducers solve this using the `Annotated` type. Shows how to use built-in reducers like `operator.add` for list concatenation, create custom reducers to handle edge cases (like None values), and demonstrates the special `add_messages` reducer used by `MessagesState`. Also covers advanced message operations: rewriting messages by ID and removing messages using `RemoveMessage`.
+
+**Usage**: Open `State_Reducer.ipynb` to understand how reducers manage state updates and handle concurrent modifications.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
