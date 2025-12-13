@@ -50,6 +50,12 @@ An in-depth exploration of **reducers** in LangGraph, which specify how state up
 
 **Usage**: Open `State_Reducer.ipynb` to understand how reducers manage state updates and handle concurrent modifications.
 
+## 9. Multiple Schemas
+
+A demonstration of **multiple state schemas** in LangGraph, showing advanced state management patterns. Covers **private state** - allowing nodes to communicate with intermediate state that doesn't appear in the graph's input or output (useful for internal working logic). Also demonstrates **input/output schema filtering** - defining explicit input and output schemas separate from the internal state schema. This allows you to control what keys are permitted on input, filter the output to only relevant keys, while still maintaining a full internal state for node operations. Shows how type hints can be used to specify which schema each node works with when using multiple schemas.
+
+**Usage**: Open `Multiple_Schemas.ipynb` to understand how to use private state and input/output schema filtering in complex graphs.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
