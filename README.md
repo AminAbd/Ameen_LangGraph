@@ -38,6 +38,12 @@ An enhanced version of the ReAct agent that demonstrates **memory checkpointing*
 
 **Usage**: Open `React_with_memory.ipynb` to see how memory checkpointing enables multi-turn conversations with context retention.
 
+## 7. State Schema
+
+A comprehensive demonstration of different **state schema approaches** in LangGraph. This notebook compares **dataclasses** and **Pydantic models** as state schemas, highlighting key differences: dataclasses provide type hints but don't enforce validation at runtime (allowing invalid values to be assigned), while Pydantic models provide **runtime validation** that catches type errors and constraint violations when state is created. Demonstrates accessing state attributes differently for dataclasses (`state.name`) versus TypedDict (`state["name"]`), and shows how Pydantic validation prevents invalid state values from being used in the graph.
+
+**Usage**: Open `State_Schema.ipynb` to understand different state schema options and their validation behaviors.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
