@@ -56,6 +56,12 @@ A demonstration of **multiple state schemas** in LangGraph, showing advanced sta
 
 **Usage**: Open `Multiple_Schemas.ipynb` to understand how to use private state and input/output schema filtering in complex graphs.
 
+## 10. Trim and Filtering Messages
+
+A comprehensive guide to managing long-running conversations in LangGraph by controlling message history. Demonstrates techniques to reduce token usage and latency when conversations grow long: **filtering messages** using `RemoveMessage` with the `add_messages` reducer to delete old messages from state, **filtering by passing subsets** to the LLM without modifying graph state (e.g., `messages[-1:]` to use only the last message), and **trimming messages** using `trim_messages` to restrict message history based on a token limit. Shows the difference between filtering (post-hoc subset selection) and trimming (token-based restriction), and demonstrates the `allow_partial` parameter's effect on message trimming behavior.
+
+**Usage**: Open `Trim_and_Filtering_Messages.ipynb` to learn techniques for managing conversation length and reducing token costs.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
