@@ -62,6 +62,12 @@ A comprehensive guide to managing long-running conversations in LangGraph by con
 
 **Usage**: Open `Trim_and_Filtering_Messages.ipynb` to learn techniques for managing conversation length and reducing token costs.
 
+## 11. Chatbot with Message Summarization
+
+An advanced chatbot implementation that demonstrates **message summarization** as an alternative to trimming or filtering conversations. Instead of deleting old messages, this approach uses LLMs to produce a **running summary** of the conversation, allowing the chatbot to retain a compressed representation of the full conversation history while managing token costs and latency. Features a custom state schema extending `MessagesState` with a `summary` field, a `call_model` node that incorporates existing summaries into prompts, a `summarize_conversation` node that creates/extends summaries and uses `RemoveMessage` to filter old messages after summarization, conditional routing that triggers summarization when conversation length exceeds a threshold (e.g., 6 messages), and **memory checkpointing** with `MemorySaver` for thread-based conversation persistence. This enables long-running conversations without incurring high token costs, as the summary provides context for the entire conversation history while keeping the actual message list manageable.
+
+**Usage**: Open `Chatbot_with_message_summarization.ipynb` to see how summarization enables efficient long-term memory in chatbots.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
