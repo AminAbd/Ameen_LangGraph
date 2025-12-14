@@ -74,6 +74,12 @@ An advanced chatbot implementation that combines **message summarization** with 
 
 **Usage**: Open `Chatbot_with_message_summarization_&_external_DB_memory.ipynb` to see how external database checkpointing enables persistent, long-term conversation memory.
 
+## 13. Streaming
+
+A comprehensive guide to **streaming** in LangGraph, which provides multiple ways to visualize graph output during execution. Demonstrates streaming graph state updates in real-time using `.stream()` and `.astream()` methods. Covers two main streaming modes: **`stream_mode="updates"`** which streams only the state updates after each node execution (showing incremental changes), and **`stream_mode="values"`** which streams the complete state after each node (showing the full accumulated state). Also demonstrates **token-wise streaming** using `.astream_events()` to stream individual tokens from chat models as they are generated, enabling real-time display of LLM responses. Shows how to filter events by node name, event type (e.g., `on_chat_model_stream`), and extract token chunks from `AIMessageChunk` objects. This is the foundation for human-in-the-loop interactions, as streaming enables live feedback and visualization of graph execution progress.
+
+**Usage**: Open `Streaming.ipynb` to learn how to stream graph state and model tokens in real-time.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
