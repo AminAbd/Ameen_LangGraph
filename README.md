@@ -92,6 +92,12 @@ A demonstration of **editing graph state** and **inserting human feedback** duri
 
 **Usage**: Open `Editing_State_and_Human_Feedback.ipynb` to learn how to edit graph state and insert human feedback during breakpoint interruptions.
 
+## 16. Dynamic Breakpoints
+
+An introduction to **dynamic breakpoints** using `NodeInterrupt`, which allows graphs to interrupt themselves conditionally based on runtime logic rather than statically defined breakpoints. Unlike static breakpoints set during compilation with `interrupt_before`, dynamic breakpoints are raised from within nodes based on developer-defined conditions (e.g., input validation, error detection, or business logic checks). Demonstrates raising `NodeInterrupt` with custom messages that explain why the interruption occurred, how interrupts are logged in state with the `__interrupt__` key, and how inspecting state shows the interrupt information in the tasks. Shows that resuming execution will re-run the interrupted node unless state is modified, creating a natural flow where state updates resolve the condition that caused the interrupt (e.g., updating invalid input to valid input). This enables **conditional human-in-the-loop workflows** where interruptions occur only when specific conditions are met, allowing for adaptive error handling, input validation, and runtime decision-making within the graph execution flow.
+
+**Usage**: Open `Dynamic_breakpoints.ipynb` to learn how to implement conditional, runtime-triggered breakpoints using NodeInterrupt.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
