@@ -98,6 +98,12 @@ An introduction to **dynamic breakpoints** using `NodeInterrupt`, which allows g
 
 **Usage**: Open `Dynamic_breakpoints.ipynb` to learn how to implement conditional, runtime-triggered breakpoints using NodeInterrupt.
 
+## 17. Parallelization
+
+A comprehensive guide to **parallel execution** in LangGraph, demonstrating how to run multiple nodes concurrently using **fan-out and fan-in** patterns. Shows how to structure graphs where multiple nodes execute in parallel (e.g., node `a` fans out to nodes `b` and `c`, which then fan in to node `d`), and explains the critical requirement for **reducers** when parallel nodes update the same state key. Demonstrates the `InvalidUpdateError` that occurs when multiple nodes try to write to the same state channel concurrently without a reducer, and how using `operator.add` reducer enables concurrent state updates by concatenating results. Covers handling **asymmetric parallel paths** where one path has more steps than another (e.g., `b → b2` vs `c`), showing how LangGraph waits for all parallel paths to complete before proceeding. Demonstrates creating **custom reducers** (like a sorting reducer) to control the order of state updates when parallel nodes finish at different times, and shows how reducers can be used to customize how concurrent updates are merged. Includes a realistic example where Wikipedia search and web search run in parallel to gather context, then an LLM generates an answer based on the combined results, demonstrating how parallelization improves performance by executing independent operations simultaneously.
+
+**Usage**: Open `Parallelization.ipynb` to learn how to implement parallel node execution with fan-out/fan-in patterns and handle concurrent state updates using reducers.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
