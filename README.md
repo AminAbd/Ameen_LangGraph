@@ -104,6 +104,18 @@ A comprehensive guide to **parallel execution** in LangGraph, demonstrating how 
 
 **Usage**: Open `Parallelization.ipynb` to learn how to implement parallel node execution with fan-out/fan-in patterns and handle concurrent state updates using reducers.
 
+## 18. Sub Graphs
+
+A demonstration of **sub-graphs** in LangGraph, which allow you to create and manage different states in different parts of your graph. This is particularly useful for multi-agent systems, where teams of agents each have their own state and responsibilities. Demonstrates how to create separate sub-graphs with their own state schemas (e.g., `FailureAnalysisState` for failure analysis, `QuestionSummarizationState` for question summarization), and how communication between parent and sub-graphs works through **overlapping state keys**. The parent graph can pass data to sub-graphs via shared keys (e.g., `cleaned_logs`), and sub-graphs can return results to the parent through their output schemas (e.g., `fa_summary`, `report`). Shows how to compile sub-graphs separately and then add them as nodes to the parent graph, enabling modular, reusable graph components. Demonstrates using `output_schema` to control which state keys are exposed from sub-graphs, allowing sub-graphs to have internal working state while only exposing relevant output keys. This pattern is essential for building complex multi-agent workflows where different agents handle specialized tasks with their own state management needs.
+
+**Usage**: Open `Sub_graphs.ipynb` to learn how to create modular sub-graphs and manage communication between parent and child graphs using overlapping state keys.
+
+## 19. Map Reduce
+
+A demonstration of the **map-reduce pattern** in LangGraph, showing how to decompose tasks into parallel sub-tasks and then aggregate results. Demonstrates a two-phase workflow: **(1) Map phase** - breaking a task into smaller sub-tasks that can be processed in parallel (e.g., generating multiple jokes about different subjects), and **(2) Reduce phase** - aggregating results from all parallel sub-tasks (e.g., selecting the best joke from all generated jokes). Shows how to use **`Send`** to dynamically create parallel execution paths: the `continue_to_jokes` function returns a list of `Send` objects that trigger the `generate_joke` node multiple times in parallel, once for each subject. Demonstrates how sub-graphs with their own state schemas (like `JokeState`) can receive input via `Send` even when their state doesn't match the parent graph's state schema. Shows how reducers (like `operator.add`) aggregate parallel results back into the parent state. This pattern is essential for efficiently processing large datasets or generating multiple variations where independent parallel operations can significantly improve performance. The example generates jokes about multiple subjects in parallel, then selects the best one, demonstrating how map-reduce enables efficient task decomposition and parallelization.
+
+**Usage**: Open `Map_reduce.ipynb` to learn how to implement the map-reduce pattern using `Send` for dynamic parallelization and reducers for result aggregation.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
