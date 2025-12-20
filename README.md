@@ -116,6 +116,18 @@ A demonstration of the **map-reduce pattern** in LangGraph, showing how to decom
 
 **Usage**: Open `Map_reduce.ipynb` to learn how to implement the map-reduce pattern using `Send` for dynamic parallelization and reducers for result aggregation.
 
+## 20. Time Travel
+
+A comprehensive guide to **time travel debugging** in LangGraph, which enables viewing, replaying, and forking from past graph execution states. Demonstrates how to use `graph.get_state()` to inspect the current state of a graph execution and `graph.get_state_history()` to browse all prior states in a conversation thread. Shows how to **replay execution** from any past checkpoint by passing the checkpoint's configuration back to the graph, allowing you to re-run the agent from any point in its history. Demonstrates **forking** execution by modifying state at a past checkpoint using `graph.update_state()` with message IDs to overwrite messages (leveraging the `add_messages` reducer's message ID-based rewriting feature), then continuing execution from that modified checkpoint. This creates a new execution path while preserving metadata like the next node to execute. Time travel enables powerful debugging workflows where you can explore alternative execution paths, test different inputs without losing the original conversation history, and understand how state evolved over time. Essential for debugging complex agent behaviors, testing edge cases, and understanding the evolution of conversation state.
+
+**Usage**: Open `Time_travel.ipynb` to learn how to use time travel debugging to view, replay, and fork from past graph execution states.
+
+## 21. Research Assistant
+
+A comprehensive multi-agent research assistant system that demonstrates advanced LangGraph patterns for conducting structured research. The system allows users to customize the research process by selecting input sources and generating a team of AI analysts, each focusing on a different sub-topic. Demonstrates **human-in-the-loop** refinement of analysts before research begins, enabling users to review and adjust the generated analyst personas. Uses **structured output** with Pydantic models (`Analyst`, `Perspectives`) to generate well-defined analyst personas with roles, affiliations, and descriptions. Plans to use **sub-graphs** to conduct in-depth interviews where each analyst conducts multi-turn conversations with expert AIs using selected sources, capturing detailed insights in separate state schemas. Demonstrates **map-reduce** patterns where experts gather information in parallel to answer analyst questions, and all interviews are conducted simultaneously. The gathered insights are synthesized into a final report using customizable prompts. This notebook showcases how to combine multiple LangGraph features (human-in-the-loop, structured output, sub-graphs, map-reduce) into a cohesive, production-ready research system that can handle complex, multi-faceted research tasks.
+
+**Usage**: Open `Research_Assistant.ipynb` to see how to build a multi-agent research system combining human-in-the-loop refinement, structured output, sub-graphs, and map-reduce patterns.
+
 ## Setup
 
 1. Create a `.env` file with your API keys:
