@@ -45,3 +45,6 @@ ENV/
 .DS_Store
 Thumbs.db
 
+# Database files
+*.backup.sqlite
+travel2.backup.sqlite
