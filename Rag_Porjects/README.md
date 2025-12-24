@@ -128,7 +128,177 @@ Each query retrieves potentially different documents, which are then combined fo
 - `chromadb`
 
 ---
+## RAG with Multi-Query Fusion (RAG-Fusion + RRF)
 
+**File:** `RAG-Fusion.ipynb`
+
+This project extends multi-query RAG by improving **document selection and ordering** using **Reciprocal Rank Fusion (RRF)**. Instead of blindly concatenating all retrieved documents, it ranks and filters them before generation, producing a cleaner and more informative context for the LLM.
+
+---
+
+### Motivation
+
+Standard RAG systems rely on a **single query → single retrieval** step, which is fragile due to the limitations of distance-based similarity search. Multi-query RAG improves recall by generating multiple query variations, but a naive implementation often concatenates all retrieved documents, which can:
+
+- introduce irrelevant or redundant chunks  
+- exceed context limits  
+- dilute important information  
+- reduce answer quality  
+
+This implementation addresses these issues by **ranking retrieved documents across queries before concatenation**.
+
+---
+
+### Core Idea
+
+Instead of treating all retrieved documents equally, this approach:
+
+1. Generates **4 semantically related queries** from the original question  
+2. Retrieves **ranked document lists** for each query  
+3. **Fuses the rankings** using Reciprocal Rank Fusion (RRF)  
+4. Selects and orders only the **most consistently relevant documents**  
+5. Uses the ordered documents as context for generation  
+
+The result is a **smaller, higher-quality, and order-aware context**.
+
+---
+
+### What Is Reciprocal Rank Fusion (RRF)?
+
+Reciprocal Rank Fusion combines multiple ranked lists into a single global ranking using **rank positions only**, not raw similarity scores.
+
+For each document:
+
+score = Σ 1 / (rank + k)
+
+
+Where:
+- `rank` is the document’s position in a retrieval list  
+- `k` is a smoothing constant (typically 60)  
+
+Documents that:
+- appear across **multiple query results**, and/or  
+- appear **highly ranked** in at least one query  
+
+receive higher fused scores.
+
+**Important:** RRF scores are used **only to rank documents**, not to weight or truncate document content. Full document chunks are passed to the LLM.
+
+---
+
+### Why Ranking Matters
+
+LLMs do not treat all context equally:
+- earlier context has more influence than later context  
+- irrelevant chunks reduce answer quality  
+- long, unordered context dilutes attention  
+
+By ranking documents before concatenation, this approach:
+- prioritizes the most informative chunks  
+- removes low-value noise  
+- improves factual grounding  
+- produces more consistent and accurate answers  
+
+---
+
+### Workflow
+
+Original Question
+↓
+Generate Multiple Query Variations
+↓
+Parallel Vector Retrieval (per query)
+↓
+Rank Fusion with RRF
+↓
+Select Top-K Documents
+↓
+Concatenate Ordered Context
+↓
+Generate Final Answer
+
+
+---
+
+### Code Structure
+
+**Indexing:**
+- Loads documents from web sources
+- Splits documents into chunks (300 chars, 50 overlap)
+- Creates embeddings and stores in ChromaDB
+
+**Query Generation:**
+```python
+generate_queries = (
+    prompt_rag_fusion 
+    | ChatOpenAI(temperature=0)
+    | StrOutputParser() 
+    | (lambda x: x.split("\n"))
+)
+```
+
+**Reciprocal Rank Fusion:**
+```python
+def reciprocal_rank_fusion(results: list[list], k=60):
+    # Fuses multiple ranked lists using RRF formula
+    # Returns reranked documents with fused scores
+```
+
+**Retrieval Chain:**
+```python
+retrieval_chain_rag_fusion = generate_queries | retriever.map() | reciprocal_rank_fusion
+```
+
+**Final RAG Chain:**
+- Combines fused retrieval results with question
+- Generates answer using ranked context
+
+### Key Differences vs Normal RAG
+
+| Aspect | Normal RAG | RAG-Fusion + RRF |
+|------|-----------|------------------|
+| Queries | Single | Multiple (4 queries) |
+| Retrieval | One ranked list | Multiple ranked lists |
+| Document Selection | Top-K from one query | Consensus across queries |
+| Ranking | Vector similarity only | Rank-based fusion (RRF) |
+| Context Quality | Noisy, order-dependent | Filtered, ordered |
+| Robustness | Low | High |
+
+---
+
+### Usage
+
+1. Set up your `.env` file with API keys:
+   ```
+   OPENAI_API_KEY=your_key_here
+   LANGCHAIN_API_KEY=your_key_here (optional, for tracing)
+   ```
+
+2. Run the notebook cells in order:
+   - Environment setup
+   - Document indexing
+   - Query generation setup
+   - RRF implementation
+   - Retrieval chain creation
+   - Final RAG chain execution
+
+3. Ask questions:
+   ```python
+   question = "What is task decomposition for LLM agents?"
+   answer = final_rag_chain.invoke({"question": question})
+   ```
+
+**Note:** The notebook uses `itemgetter` from `operator` module - make sure to import it:
+```python
+from operator import itemgetter
+```
+
+### Summary
+
+RAG-Fusion with Reciprocal Rank Fusion improves Retrieval-Augmented Generation by replacing single-query retrieval with **multi-query consensus ranking**, ensuring that only the most consistently relevant documents are used—and used in the right order—before generation.
+
+
+---
 ### Corrective RAG (CRAG)
 
 **File:** `Corrective RAG (CRAG).ipynb`
@@ -233,4 +403,7 @@ Key dependencies:
 - [Corrective RAG Paper](https://arxiv.org/abs/2401.15884)
 - [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
 - [LangChain Documentation](https://python.langchain.com/)
+
+
+
 
